@@ -100,41 +100,8 @@ router.post("/", async (req, res) => {
     return ;
 });
 
-// 
-
+// upload files
 router.post("/clipfile", upload.array('clippedFile'), async(req, res) =>{
-    /*
-    var fstream;
-    req.pipe(req.busboy);
-    req.busboy.on('file', function (fieldname, file, filename) {
-        console.log("Uploading: " + filename);
-
-        //Path where image will be uploaded
-        fstream = fs.createWriteStream(__dirname + '/img/' + "bearjak.jpg");
-        file.pipe(fstream);
-        fstream.on('close', function () {    
-            console.log("Upload Finished of " + filename);              
-            res.redirect('back');           //where to go next
-        });
-    });
-    
-    console.log("ballsack");
-    console.log(__dirname);
-    console.log(req.body.file, req.body.file);
-    console.dir(req.files);
-    fstream = fs.createWriteStream(__dirname + '/img/' + 'bearjak.jpg');
-    console.log(__dirname + '/img/' + 'bearjak.jpg');
-    //fs.createReadStream(__dirname+'/../uploads/bearjak.jpg').pipe(bucket.openUploadStreamWithId(uuidv4(), 'bearjak.jpg', {chunkSizeBytes: 1048576}));
-    */
-    
-    /*
-    var currentMessage = {message:""};
-    if (req.user) currentMessage = await Text.findOne({username: req.user.username });
-    if (!currentMessage) currentMessage = {message:""};
-    res.render('index', {user: req.user, message: currentMessage.message});
-*/
-    //return ;
-    
     for (const file of req.files){
         const newFile = new File({
             username: req.user.username,
