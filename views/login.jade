@@ -1,0 +1,12 @@
+extends layout 
+
+block content 
+  h1(class="title") Log In 
+  form(action="login" method="POST")
+    div.form-group
+      label(for="username") Username: 
+      input(name="username" placeholder="username" type="text")
+    div.form-group
+      label(for="password") Password: 
+      input(name="password" type="password")
+    button(type="submit") Log In

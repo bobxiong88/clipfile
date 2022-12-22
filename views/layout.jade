@@ -1,0 +1,16 @@
+doctype html
+html(lang='en')
+    head
+        title= title
+        meta(charset='utf-8')
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        link(rel='stylesheet', href='stylesheets/style.css')
+    body 
+        div(class="navbar")
+            if user
+                a(href="/logout") Log out
+                div= user.username
+            else 
+                a(href="/login") Log in
+                a(href="/signup") Sign up                 
+        block content 

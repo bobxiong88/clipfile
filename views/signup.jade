@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h1(class="title") Sign Up 
+  form(action="" method="POST")
+    p= errorMessage
+    div.form-group
+      label(for="username") Username: 
+      input(name="username" placeholder="username" type="text")
+    div.form-group
+      label(for="password") Password:  
+      input(name="password" type="password" minlength="8")
+    div.form-group 
+      label(for="confirm") Confirm Password: 
+      input(name="confirm" type="password")
+    button(type="submit") Sign Up
