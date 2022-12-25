@@ -11,7 +11,8 @@ module.exports = mongoose.model(
     "File",
     new Schema({
         username: { type: String, required: true },
-        fileId: { type: String, required: true},
-        fileName: { type: String, required: true}
+        id: { type: String, required: true},
+        name: { type: String, required: true},
+        filename: {type: String, required: true}
     })
 );

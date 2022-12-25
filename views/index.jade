@@ -13,7 +13,16 @@ block content
             form(role="form",action="/clipfile", method="POST", enctype="multipart/form-data")
                 div.form-group
                     input(type="file", name="clippedFile", id = "clippedFile", required, multiple)
-                    input(type="submit") 
-
+                    input(type="submit")
+        div
+            each file in files 
+                div(id = file.filename)
+                    p #{file.name}
+                    form(action="/download/"+file.filename+"/"+file.name, method = "GET")
+                        div.form-group
+                            button Download 
+                    form(action="/delete/"+file.id, method = "POST")
+                        div.form-group
+                            button Delete 
     else 
         a(href="/login") Log in to get started! 

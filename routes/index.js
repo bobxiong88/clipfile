@@ -6,6 +6,7 @@ var path = require('path');     //used for file path
 var multer = require('multer');
 const {GridFsStorage} = require('multer-gridfs-storage');
 const crypto = require('crypto');
+var ObjectId = require('mongodb').ObjectID;
 
 const { 
     v1: uuidv1,
@@ -66,37 +67,60 @@ connect.once('open', () => {
     });
 });
 
+async function get_files(req){
+    var files = await File.find({username: req.user.username });
+    return files;
+}
+
 /* GET home page. */
 router.get("/", async (req, res) => {
-    var currentMessage = {message:""};
+    // get clipped text
+    var message = "";
+    var currentMessage;
     if (req.user) currentMessage = await Text.findOne({username: req.user.username });
-    if (!currentMessage) currentMessage = {message:""};
-    res.render('index', {user: req.user, message: currentMessage.message});
+    if (currentMessage) message = currentMessage.message; 
+
+    // get clipped files
+    var files = [];
+    if (req.user) var files = await get_files(req);
+    console.log(files);
+
+    res.render('index', {user: req.user, message: message, files: files});
 });
 
 // clipping new text
 router.post("/", async (req, res) => {
+    // make sure text is less than 10000 characters
     if (req.body.message.length > 10000){
-        res.render('index', {user:req.user, errorMessage: "You've exceeded the 10000 character limit, please try again"});
+        res.render('index', {user:req.user, 
+            errorMessage: "You've exceeded the 10000 character limit, please try again"});
         return ;
     }
+
+    // get previous message
     var currentMessage = await Text.findOne({username: req.user.username });
     console.log(currentMessage);
+
+    // previous message exist
     if (currentMessage){
         await Text.updateOne(
             {username: req.user.username },
             {
                 $set: {message: req.body.message}
             });
-        res.render('index', {user: req.user, message: req.body.message});
+        res.redirect("/.");
+        // res.render('index', {user: req.user, message: req.body.message});
         return ;
     }
+
+    // no previous message
     console.log(req.user.username, req.body.message);
     const text = new Text({
         username: req.user.username,
         message: req.body.message
     }).save();
-    res.render('index', {user: req.user, message:req.body.message});
+    res.redirect("/.")
+    //res.render('index', {user: req.user, message:req.body.message});
     return ;
 });
 
@@ -105,12 +129,37 @@ router.post("/clipfile", upload.array('clippedFile'), async(req, res) =>{
     for (const file of req.files){
         const newFile = new File({
             username: req.user.username,
-            fileId: file.id,
-            fileName: file.originalname
+            id: file.id,
+            name: file.originalname,
+            filename: file.filename
         }).save();
     };
     console.dir(req.files);
     res.redirect("/..");
+});
+
+router.get("/download/:filename/:name", async (req,res)=>{
+    console.log(req.params.filename);
+    gfs.find({filename: req.params.filename}).toArray((err, files) => {
+        if (!files[0] || files.length == 0) {
+            return res.status(200).json({
+                success: false,
+                message: 'No files available',
+            });
+        }
+        gfs.openDownloadStreamByName(req.params.filename).pipe(res);
+        return ;
+    });
+});
+
+router.post("/delete/:id", async(req,res)=>{
+    console.log("AHHHHHHHHHHHHHHHHHHHH")
+    console.log(req.params.id);
+    await File.deleteOne({id: req.params.id});
+    var fileId = await new mongoose.Types.ObjectId(req.params.id);
+    gfs.delete(fileId);
+    res.redirect("/../..");
+    return ;
 });
 
 module.exports = router;
