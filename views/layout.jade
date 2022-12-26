@@ -8,9 +8,9 @@ html(lang='en')
     body 
         div(class="navbar")
             if user
-                a(href="/logout") Log out
-                div= user.username
+                div(id = "username") #{user.username}
+                a(href="/logout", id = "logout") log out
             else 
-                a(href="/login") Log in
-                a(href="/signup") Sign up                 
+                a(href="/login", id = "login") log in
+                a(href="/signup", id = "signup") sign up                 
         block content 

@@ -1,16 +1,16 @@
 extends layout
 
 block content
-  h1(class="title") Sign Up 
-  form(action="" method="POST")
+  h1(class="title") sign up 
+  form(action="signup" method="POST")
     p= errorMessage
     div.form-group
-      label(for="username") Username: 
-      input(name="username" placeholder="username" type="text")
+      label(for="username") username: 
+      input(name="username" type="text" required)
     div.form-group
-      label(for="password") Password:  
-      input(name="password" type="password" minlength="8")
+      label(for="password") password:  
+      input(name="password" type="password" minlength="8" required)
     div.form-group 
-      label(for="confirm") Confirm Password: 
-      input(name="confirm" type="password")
-    button(type="submit") Sign Up
+      label(for="confirm") confirm: 
+      input(name="confirm" type="password" required)
+    button(type="submit") sign up

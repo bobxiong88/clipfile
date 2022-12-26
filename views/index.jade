@@ -1,28 +1,26 @@
 extends layout
 
 block content
-    h1(class="title") 
+    h1(class="title") clipboard 
     if user
-        div Clip some text 
+        div(id = "text") text
             form(action="/", method="post")
-                div.form-group
-                    label(for="message")= errorMessage
-                    textarea(name="message")= message
-                button(type="submit") Clip it! 
-        div ...or some files
-            form(role="form",action="/clipfile", method="POST", enctype="multipart/form-data")
+                label(for="message")= errorMessage
+                textarea(name="message")= message
+                button(type="submit") clip it! 
+        hr
+        div(id = "files") files
+            div(id = "file-container")
+                each file in files 
+                    div(id = file.filename, class = "file")
+                        p #{file.name}
+                        form(action="/download/"+file.filename+"/"+file.name, method = "GET")
+                            button(class = "download")
+                        form(action="/delete/"+file.id, method = "POST")
+                            button(class = "delete")
+            form(role="form",action="/clipfile", method="POST", enctype="multipart/form-data", id = "upload")
                 div.form-group
                     input(type="file", name="clippedFile", id = "clippedFile", required, multiple)
-                    input(type="submit")
-        div
-            each file in files 
-                div(id = file.filename)
-                    p #{file.name}
-                    form(action="/download/"+file.filename+"/"+file.name, method = "GET")
-                        div.form-group
-                            button Download 
-                    form(action="/delete/"+file.id, method = "POST")
-                        div.form-group
-                            button Delete 
+                    input(type="submit", id = "clipfile")
     else 
-        a(href="/login") Log in to get started! 
+        a(href="/login", id = "mainlogin") log in to get started 

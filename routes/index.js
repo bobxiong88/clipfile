@@ -91,9 +91,14 @@ router.get("/", async (req, res) => {
 // clipping new text
 router.post("/", async (req, res) => {
     // make sure text is less than 10000 characters
-    if (req.body.message.length > 10000){
+
+    var received = await req.body.message;
+
+    var len = await received.length;
+
+    if (len > 10000){
         res.render('index', {user:req.user, 
-            errorMessage: "You've exceeded the 10000 character limit, please try again"});
+            errorMessage: "You've exceeded the 10000 character limit, please try again", files: get_files(req)});
         return ;
     }
 
@@ -106,7 +111,7 @@ router.post("/", async (req, res) => {
         await Text.updateOne(
             {username: req.user.username },
             {
-                $set: {message: req.body.message}
+                $set: {message: received}
             });
         res.redirect("/.");
         // res.render('index', {user: req.user, message: req.body.message});
@@ -114,10 +119,10 @@ router.post("/", async (req, res) => {
     }
 
     // no previous message
-    console.log(req.user.username, req.body.message);
+    console.log(req.user.username, received);
     const text = new Text({
         username: req.user.username,
-        message: req.body.message
+        message: received
     }).save();
     res.redirect("/.")
     //res.render('index', {user: req.user, message:req.body.message});

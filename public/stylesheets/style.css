@@ -1,8 +1,158 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+@font-face {
+    font-family: 'Mukta';
+    src: url(/../fonts/Mukta-Regular.ttf);
+}
+
+/* global decorations */
+
+body>* {
+    margin: 0px;
+    padding: 0px;
+    border: 0px;
+    font-family: 'Mukta';
 }
 
 a {
-  color: #00B7FF;
+    color: inherit;
 }
+
+.title {
+    font-size: 48px;
+    text-align:center;
+}
+
+/* layout.jade */
+
+.navbar{
+    display: flex;
+    justify-content:flex-end;
+    gap: 20px;
+    padding: 12px;
+    padding-right: 28px;
+}
+.navbar>*{
+    font-size: 20px;
+}
+
+/* index.jade */
+
+#mainlogin{
+    display:block;
+    text-decoration: none;
+    font-size: 24px;
+    text-align:center;
+    margin:auto;
+}
+
+#text{
+    width: 80vw;
+    text-align:center;
+    margin: auto;
+    font-size: 36px;
+    margin-bottom:36px;
+}
+
+textarea[name = "message"]{
+    display:block;
+    width: calc(100% - 14px);
+    min-height: 240px;
+    padding: 4px;
+    padding-left: 8px;
+    margin-bottom: 4px;
+}
+/*
+#text>form>button{
+    display:block;
+    width: 100%;
+    height:24px;
+}
+*/
+hr {
+    border: 1px;
+    clear:both;
+    width:80vw;             
+    background-color:black;
+    height: 1px;
+    margin:auto;
+  }
+
+#files{
+    width: 80vw;
+    text-align:center;
+    margin: auto;
+    font-size: 36px;
+    margin-bottom:36px;
+    box-sizing:border-box;
+}
+
+#file-container{
+    display:flex;
+    flex-wrap:wrap;
+    row-gap: 8px;
+    column-gap:8px;
+    padding:8px;
+}
+
+.file{
+    font-size: 16px;
+    overflow: hidden;
+    border: 2px solid black;
+    padding: 4px;
+    width: 128px;
+    height: 128px;
+    border-radius: 3px; 
+}
+
+.file>form{
+    display:inline;
+}
+
+.file>form>button{
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    height:50px;
+    width:50px;
+    margin:4px;
+}
+
+.download{
+    background-image:url(/../images/download.svg);
+}
+
+.delete{
+    background-image:url(/../images/delete.svg);
+}
+/* login.jade */
+form[action="login"]{
+    text-align:center;
+}
+
+form[action="login"]>.form-group>input[name="password"]{
+    width: 180px;
+}
+
+form[action="login"]>button{
+    width: 258px;
+    height: 24px;
+}
+
+
+/* signup.jade */
+form[action="signup"]{
+    text-align:center;
+}
+
+form[action="signup"]>.form-group>input[name="password"]{
+    width: 180px;
+}
+
+form[action="signup"]>.form-group>input[name="confirm"]{
+    width: 192px;
+}
+
+form[action="signup"]>button{
+    height: 24px;
+    width: 258px;
+}
+
+
