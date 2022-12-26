@@ -23,6 +23,19 @@
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "uniqid": "^5.4.0",
-    "uuid": "^9.0.0"
-  }
+    "uuid": "^9.0.0",
+    "yarn": "^1.22.19"
+  },
+  "description": "",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bobxiong88/clipfile.git"
+  },
+  "author": "Bob Xiong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bobxiong88/clipfile/issues"
+  },
+  "homepage": "https://github.com/bobxiong88/clipfile#readme"
 }
